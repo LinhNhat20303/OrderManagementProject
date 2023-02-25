@@ -53,15 +53,6 @@ public class Main {
         return UserManagerment.getInstance().getCurrentUser().checkRole(UserRole.ADMIN);
     }
 
-    private void addCustomer() {
-        if (checkRole()) {
-            System.out.println("Add new Customer: ");
-            customerManagement.addNew();
-        } else {
-            System.out.println("Dont have permission need Admin role");
-        }
-    }
-
     private void add(object obj) {
         if (checkRole()) {
             if (obj == object.CUSTOMER) {
@@ -72,13 +63,22 @@ public class Main {
                 System.out.println("Add new order");
                 orderManagement.addNew();
             }
+        } else {
+            System.out.println("Dont have permission need Admin role");
         }
+
     }
 
-    private void updateCustomerByID() {
+    private void update(object obj) {
         if (checkRole()) {
-            System.out.println("Update information");
-            customerManagement.updateCustomer();
+            if (obj == object.CUSTOMER) {
+                System.out.println("Update customer information");
+                customerManagement.updateCustomer();
+            }
+            if (obj == object.ORDER) {
+                System.out.println("Update order information");
+                orderManagement.updateOrder();
+            }
         } else {
             System.out.println("Dont have permission need Admin role");
         }
@@ -94,10 +94,16 @@ public class Main {
         }
     }
 
-    private void SaveToFile() {
+    private void SaveToFile(object obj) {
         if (checkRole()) {
-            System.out.println("Save to File");
-            customerManagement.saveData();
+            if (obj == object.CUSTOMER) {
+                System.out.println("Save Data");
+                customerManagement.saveData();
+            }
+            if (obj == object.ORDER) {
+                System.out.println("Save Data");
+                orderManagement.saveData();
+            }
         } else {
             System.out.println("Dont have permission need Admin role");
         }
@@ -135,13 +141,13 @@ public class Main {
                     add(object.CUSTOMER);
                     break;
                 case CUSTOMER_UPDATE:
-                    updateCustomerByID();
+                    update(object.CUSTOMER);
                     break;
                 case CUSTOMER_SEARCH:
                     searchCustomerByID();
                     break;
                 case CUSTOMER_SAVE_TO_FILE:
-                    SaveToFile();
+                    SaveToFile(object.CUSTOMER);
                     break;
                 case CUSTOMER_PRINT_ALL:
                     PrintFromFile();
@@ -161,14 +167,14 @@ public class Main {
 
                     break;
                 case ORDER_SAVE_TO_FILE:
-
+                    SaveToFile(object.ORDER);
                     break;
 
                 case ORDER_PRINT_ALL:
-
+                    printAllProduct();
                     break;
                 case ORDER_UPDATE:
-
+                    update(object.ORDER);
                     break;
 
                 case EXIT:

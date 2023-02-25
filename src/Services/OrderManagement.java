@@ -56,6 +56,17 @@ public class OrderManagement extends DataManagement<Orders> {
         return null;
     }
 
+    public void updateOrder() {
+        String orderId = Util.inputString(null, false);
+        Orders customer = getOrderByID(orderId);
+        if (customer == null) {
+            System.out.println("Not found");
+        } else {
+            customer.update();
+            saveData();
+        }
+    }
+
     @Override
     protected Orders parseEntity(String stringEntity) {
         try {

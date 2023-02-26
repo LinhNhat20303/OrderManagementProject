@@ -5,6 +5,7 @@
 package Services;
 
 import java.util.Collections;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -57,14 +58,43 @@ public class OrderManagement extends DataManagement<Orders> {
     }
 
     public void updateOrder() {
-        String orderId = Util.inputString(null, false);
-        Orders customer = getOrderByID(orderId);
-        if (customer == null) {
+        String orderId = Util.inputString("Input id", false);
+        Orders order = getOrderByID(orderId);
+        if (order == null) {
             System.out.println("Not found");
         } else {
-            customer.update();
+            order.update();
             saveData();
         }
+    }
+
+    public void deleteOrder() {
+        String id = Util.inputString("Input ID", false);
+        if (id != null && !id.isBlank()) {
+            for (Orders order : entityList) {
+                if (id.equalsIgnoreCase(order.getOrderID())) {
+                    entityList.remove(order);
+                    System.out.println("Deleted.");
+                    break;
+                }
+            }
+        }
+        System.out.println("Not found.");
+    }
+
+    public void printOutTable(List<Orders> list) {
+        for (Orders order : list) {
+            Collections.sort(list, compNameAsc);
+            System.out.println(order);
+        }
+    }
+
+    public void filterPendingOrder() {
+        List<Orders> resultList = this.entityList
+                .stream()
+                .filter(ord -> (ord.getStatus()) == false)
+                .toList();
+        printOutTable(resultList);
     }
 
     @Override

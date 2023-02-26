@@ -5,13 +5,10 @@
 package model;
 
 import Services.CustomersManagement;
-import Services.OrderManagement;
 import Services.ProductManagement;
 
 import java.util.Date;
 import java.util.Comparator;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import utils.CustomerValidation;
 import utils.OrderValidation;

@@ -57,7 +57,7 @@ public class Main {
         if (checkRole()) {
             if (obj == object.CUSTOMER) {
                 System.out.println("Add new Customer");
-                // customerManagement.addNew();
+                customerManagement.addNew();
             }
             if (obj == object.ORDER) {
                 System.out.println("Add new order");
@@ -67,6 +67,11 @@ public class Main {
             System.out.println("Dont have permission need Admin role");
         }
 
+    }
+
+    private void deleteOrder() {
+        System.out.println("Delete Order");
+        orderManagement.deleteOrder();
     }
 
     private void update(object obj) {
@@ -137,7 +142,6 @@ public class Main {
             userChoice = menu.getUserChoice();
             switch (userChoice) {
                 case CUSTOMER_CREATE_NEW_CUSTOMER:
-                    // addCustomer();
                     add(object.CUSTOMER);
                     break;
                 case CUSTOMER_UPDATE:
@@ -152,12 +156,11 @@ public class Main {
                 case CUSTOMER_PRINT_ALL:
                     PrintFromFile();
                     break;
-
                 case ORDER_CREATE_NEW_ORDER:
                     add(object.ORDER);
                     break;
                 case ORDER_DELETE:
-
+                    deleteOrder();
                     break;
                 case ORDER_LIST_ALL_ORDER_ASC:
                     printAllOrderAsc();

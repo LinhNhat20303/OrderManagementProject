@@ -1,7 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Main.java to edit this template
- */
+
 package Services;
 
 import java.util.Collections;
@@ -89,7 +86,7 @@ public class OrderManagement extends DataManagement<Orders> {
         }
     }
 
-    public void filterPendingOrder() {
+    public void listAllPendingOrder() {
         List<Orders> resultList = this.entityList
                 .stream()
                 .filter(ord -> (ord.getStatus()) == false)

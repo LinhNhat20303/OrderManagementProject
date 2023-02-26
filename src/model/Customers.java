@@ -1,17 +1,10 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 package model;
 
 import Main.OException;
 import utils.CustomerValidation;
 import utils.Util;
 
-/**
- *
- * 
- */
 public class Customers implements Comparable<Customers> {
 
     private static final String ID_Format = "CXXX";

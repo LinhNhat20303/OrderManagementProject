@@ -1,4 +1,3 @@
-
 package Main;
 
 import Services.FileDataService;
@@ -18,7 +17,6 @@ public class Main {
         ORDER
     }
 
-    // đưa path sang hàm khác
     private static String productDataFilePath = "./src/data/product.txt";
     private static String orderDataFilePath = "./src/data/order.txt";
     private static String customerDataFilePath = "./src/data/customer.txt";
@@ -74,6 +72,22 @@ public class Main {
         orderManagement.deleteOrder();
     }
 
+    private void print(object obj) {
+        if (checkRole()) {
+            if (obj == object.CUSTOMER) {
+                System.out.println("Print ");
+                customerManagement.printAll();
+                ;
+            }
+            if (obj == object.ORDER) {
+                System.out.println("Print all product in product.txt");
+                productManagement.PrintAll();
+            }
+        } else {
+            System.out.println("Dont have permission need Admin role");
+        }
+    }
+
     private void update(object obj) {
         if (checkRole()) {
             if (obj == object.CUSTOMER) {
@@ -114,25 +128,17 @@ public class Main {
         }
     }
 
-    private void PrintFromFile() {
-        if (checkRole()) {
-            System.out.println("Save to File");
-            customerManagement.printAll();
-        } else {
-            System.out.println("Dont have permission need Admin role");
-        }
-    }
-
     // product
-    private void printAllProduct() {
-        System.out.println("Print all product in product.txt");
-        productManagement.PrintAll();
-    }
 
     private void printAllOrderAsc() {
         System.out.println("Print all orders(ascending)");
         orderManagement.printAllAsc();
 
+    }
+
+    private void listAllPendingOrder() {
+        System.out.println("List all pending orders: ");
+        orderManagement.listAllPendingOrder();
     }
 
     private void process() {
@@ -154,7 +160,7 @@ public class Main {
                     SaveToFile(object.CUSTOMER);
                     break;
                 case CUSTOMER_PRINT_ALL:
-                    PrintFromFile();
+                    print(object.CUSTOMER);
                     break;
                 case ORDER_CREATE_NEW_ORDER:
                     add(object.ORDER);
@@ -165,21 +171,18 @@ public class Main {
                 case ORDER_LIST_ALL_ORDER_ASC:
                     printAllOrderAsc();
                     break;
-                // hoàn thành các function liên quan đến order
                 case ORDER_LIST_ALL_PENDING_ORDER:
-
+                    listAllPendingOrder();
                     break;
                 case ORDER_SAVE_TO_FILE:
                     SaveToFile(object.ORDER);
                     break;
-
                 case ORDER_PRINT_ALL:
-                    printAllProduct();
+                    print(object.ORDER);
                     break;
                 case ORDER_UPDATE:
                     update(object.ORDER);
                     break;
-
                 case EXIT:
                     System.out.println("Exited!");
                     break;

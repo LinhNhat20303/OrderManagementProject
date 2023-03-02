@@ -113,7 +113,7 @@ public class OrderManagement extends DataManagement<Orders> {
                 .stream()
                 .filter(ord -> (ord.getStatus()) == false)
                 .toList();
-        System.out.println(resultList);
+        printOutTable(resultList);
     }
 
     @Override

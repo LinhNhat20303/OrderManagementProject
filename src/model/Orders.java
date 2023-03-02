@@ -210,7 +210,6 @@ public class Orders {
                 setProductID(attributes[2]);
                 setOrderQuantity(Integer.parseInt(attributes[3]));
                 setOrderDate(OrderValidation.toDate(attributes[4]));
-                System.out.println(attributes[4]);
                 setStatus(Boolean.parseBoolean(attributes[5]));
             }
         }

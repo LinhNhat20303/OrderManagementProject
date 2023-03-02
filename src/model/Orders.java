@@ -11,7 +11,7 @@ import utils.CustomerValidation;
 import utils.OrderValidation;
 import utils.Util;
 
-public class Orders implements Comparable<Orders> {
+public class Orders {
 
     private static final String ID_Format = "DXXX";
     private static final String ID_Pattern = "D\\{3}";
@@ -41,7 +41,7 @@ public class Orders implements Comparable<Orders> {
     public void input() {
 
         do {
-            String customerID = Util.inputString("Input customer's id", false);
+            String customerID = Util.inputString("Input customer's id (" + ID_Format + ")", false);
             if (CustomersManagement.getInstance().getCustomerById(customerID) != null) {
                 if (CustomerValidation.checkCustomerID(customerID)) {
                     setCustomerID(customerID);
@@ -206,7 +206,7 @@ public class Orders implements Comparable<Orders> {
         if (entityString != null) {
             String[] attributes = entityString.split(Util.SEP, -1);
             if (attributes.length >= Orders.ENTITY_ATTRIBUTE_COUNT) {
-
+                System.out.println("sucxxx");
                 setOrderID(attributes[0]);
                 setCustomerID(attributes[1]);
                 setProductID(attributes[2]);
@@ -217,23 +217,8 @@ public class Orders implements Comparable<Orders> {
                 }
                 setOrderDate(OrderValidation.toDate(attributes[4]));
                 // setStatus(attributes[5]);
+                System.out.println(attributes);
             }
         }
-    }
-
-    public static Comparator compNameAsc = new Comparator() {
-        @Override
-        public int compare(Object o1, Object o2) {
-            Orders b1 = (Orders) o1;
-            Orders b2 = (Orders) o2;
-            return b1.getCustomerID().compareTo(b2.getCustomerID());
-
-        }
-    };
-
-    @Override
-    public int compareTo(Orders o) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from
-                                                                       // nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 }

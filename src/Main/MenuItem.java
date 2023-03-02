@@ -16,7 +16,6 @@ public enum MenuItem {
     ORDER_LIST_ALL_PENDING_ORDER("List all Product that status are pending", UserRole.USER),
     ORDER_LIST_ALL_ORDER_ASC("List all Orders in ascending order of Customer name", UserRole.USER),
     ORDER_SAVE_TO_FILE("Save Orders to file(named orders.txt)", UserRole.ADMIN),
-    ORDER_PRINT_ALL("Print from file", UserRole.USER),
     // Customer
     CUSTOMER("Customer", UserRole.USER),
     CUSTOMER_CREATE_NEW_CUSTOMER("Create new Customer", UserRole.ADMIN),

@@ -29,7 +29,7 @@ public class Menu {
             MenuItem.ORDER_DELETE,
             MenuItem.ORDER_LIST_ALL_PENDING_ORDER,
             MenuItem.ORDER_LIST_ALL_ORDER_ASC,
-            MenuItem.ORDER_PRINT_ALL, };
+           };
 
     private MenuItem primaryOption = null;
     private MenuItem subOption = null;
@@ -82,6 +82,7 @@ public class Menu {
             if (primaryOption != MenuItem.EXIT && !isRepeatAction()) {
                 subOption = getChoice(primaryOption);
             }
+
         } while (primaryOption != MenuItem.EXIT && subOption == MenuItem.BACK);
         return primaryOption.equals(MenuItem.EXIT) ? MenuItem.EXIT : subOption;
     }

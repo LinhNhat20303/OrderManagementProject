@@ -7,7 +7,7 @@ public class Util {
 
     private static final String IGNORE_CASE_PATTERN = "(?i)";
     public static final String SEP = ", ";
-    public static final String DATE_FORMAT = " MM/DD/yyyy";
+    public static final String DATE_FORMAT = "MM/dd/yyyy";
 
     public static int inputInteger(String message, int minValue, int maxValue) {
         int val = minValue - 1;

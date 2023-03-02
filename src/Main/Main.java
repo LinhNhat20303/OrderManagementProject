@@ -29,25 +29,19 @@ public class Main {
 
     private void prepare() {
         try {
-                // customer
+            // customer
             this.customerManagement = customerManagement.getInstance();
-            this.customerManagement.setDatabaseService(
-                    new FileDataService(Main.customerDataFilePath,
-                            Customers.getAttributesHeader()));
+            this.customerManagement.setDatabaseService(new FileDataService(Main.customerDataFilePath, Customers.getAttributesHeader()));
             this.customerManagement.loadData();
             // order
             this.orderManagement = orderManagement.getInstace();
-            this.orderManagement
-                    .setDatabaseService(new FileDataService(Main.orderDataFilePath,
-                            Orders.getAttributesHeader()));
+            this.orderManagement.setDatabaseService(new FileDataService(Main.orderDataFilePath,Orders.getAttributesHeader()));
             this.orderManagement.loadData();
             // product
             this.productManagement = productManagement.getInstance();
-            this.productManagement
-                    .setDatabaseService(new FileDataService(Main.productDataFilePath,
-                            Products.getAttributesHeader()));
+            this.productManagement.setDatabaseService(new FileDataService(Main.productDataFilePath,Products.getAttributesHeader()));
             this.productManagement.loadData();
-        
+
         } catch (Exception ex) {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
         }

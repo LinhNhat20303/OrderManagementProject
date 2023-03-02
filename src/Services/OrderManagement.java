@@ -75,32 +75,31 @@ public class OrderManagement extends DataManagement<Orders> {
     }
     
     public void printAllAsc() {
-        Collections.sort(entityList, new Comparator<Orders>() {
-            @Override
-            public int compare(Orders o1, Orders o2) {
-                String name1 = CustomersManagement.getInstance().getCustomerById(o1.getCustomerID()).getCustomerName();
-                String name2 = CustomersManagement.getInstance().getCustomerById(o2.getCustomerID()).getCustomerName();
-                return name1.compareTo(name2);
-            }
-        });
+//        Collections.sort(entityList, new Comparator<Orders>() {
+//            @Override
+//            public int compare(Orders o1, Orders o2) {
+////                String name1 = CustomersManagement.getInstance().getCustomerById(o1.getCustomerID()).getCustomerName();
+////                String name2 = CustomersManagement.getInstance().getCustomerById(o2.getCustomerID()).getCustomerName();
+////                return name1.compareTo(name2);
+//                return o1.getCustomerID().compareTo(o2.getCustomerID());
+//            }
+//        });
         printOutTable(entityList);
     }
 
     private void printOutTable(List<Orders> list) {
         Formatter fmt = new Formatter();
-        fmt.format("%9s %11s %17s %11s %9s %13s %9s\n", 
+        fmt.format("%9s %11s %11s %9s %13s %9s\n", 
                 "OrderID",
                 "CustomerID",
-                "CustomerName",
                 "ProductID",
                 "Quantity",
                 "OrderDate",
                 "Status");
         for (Orders ord : list) {
-            fmt.format("%9s %11s %17s %11s %9s %13s %9s\n",
+            fmt.format("%9s %11s %11s %9s %13s %9s\n",
                     ord.getOrderID(),
                     ord.getCustomerID(),
-                    CustomersManagement.getInstance().getCustomerById(ord.getCustomerID()).getCustomerName(),
                     ord.getProductID(),
                     ord.getOrderQuantity(),
                     OrderValidation.toString(ord.getOrderDate()),

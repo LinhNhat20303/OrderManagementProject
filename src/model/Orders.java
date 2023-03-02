@@ -1,4 +1,3 @@
-
 package model;
 
 import Services.CustomersManagement;
@@ -206,18 +205,13 @@ public class Orders {
         if (entityString != null) {
             String[] attributes = entityString.split(Util.SEP, -1);
             if (attributes.length >= Orders.ENTITY_ATTRIBUTE_COUNT) {
-                System.out.println("sucxxx");
                 setOrderID(attributes[0]);
                 setCustomerID(attributes[1]);
                 setProductID(attributes[2]);
-                try {
-                    setOrderQuantity(Integer.parseInt(attributes[3]));
-                } catch (NumberFormatException ex) {
-                    System.out.println(">>>>> Err: " + ex.getMessage());
-                }
+                setOrderQuantity(Integer.parseInt(attributes[3]));
                 setOrderDate(OrderValidation.toDate(attributes[4]));
-                // setStatus(attributes[5]);
-                System.out.println(attributes);
+                System.out.println(attributes[4]);
+                setStatus(Boolean.parseBoolean(attributes[5]));
             }
         }
     }

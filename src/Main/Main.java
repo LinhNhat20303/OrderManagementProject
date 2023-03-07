@@ -19,9 +19,9 @@ public class Main {
         PRODUCTS
     }
 
-    private static String productDataFilePath = "./src/data/product.txt";
-    private static String orderDataFilePath = "./src/data/order.txt";
-    private static String customerDataFilePath = "./src/data/customer.txt";
+    private String productDataFilePath = "./src/data/product.txt";
+    private String orderDataFilePath = "./src/data/order.txt";
+    private String customerDataFilePath = "./src/data/customer.txt";
 
     public static OrderManagement orderManagement;
     public static ProductManagement productManagement;
@@ -32,17 +32,17 @@ public class Main {
             // customer
             this.customerManagement = customerManagement.getInstance();
             this.customerManagement.setDatabaseService(
-                    new FileDataService(Main.customerDataFilePath, Customers.getAttributesHeader()));
+                    new FileDataService(this.customerDataFilePath, Customers.getAttributesHeader()));
             this.customerManagement.loadData();
             // order
             this.orderManagement = orderManagement.getInstace();
             this.orderManagement
-                    .setDatabaseService(new FileDataService(Main.orderDataFilePath, Orders.getAttributesHeader()));
+                    .setDatabaseService(new FileDataService(this.orderDataFilePath, Orders.getAttributesHeader()));
             this.orderManagement.loadData();
             // product
             this.productManagement = productManagement.getInstance();
             this.productManagement
-                    .setDatabaseService(new FileDataService(Main.productDataFilePath, Products.getAttributesHeader()));
+                    .setDatabaseService(new FileDataService(this.productDataFilePath, Products.getAttributesHeader()));
             this.productManagement.loadData();
 
         } catch (Exception ex) {
@@ -50,9 +50,8 @@ public class Main {
         }
     }
 
-    /// tri bus liem
     private void process() {
-
+        MainFunc mainFunc = new MainFunc();
         Menu menu = new Menu();
         MenuItem userChoice;
         do {

@@ -1,4 +1,3 @@
-
 package Services;
 
 import java.util.Collections;
@@ -7,11 +6,11 @@ import java.util.Formatter;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import model.OrderLine;
 
 import model.Orders;
 import utils.OrderValidation;
 import utils.Util;
-
 
 public class OrderManagement extends DataManagement<Orders> {
 
@@ -41,7 +40,7 @@ public class OrderManagement extends DataManagement<Orders> {
     public Orders getOrderByID(String orderID) {
         if (orderID != null && !orderID.isBlank()) {
             for (Orders order : entityList) {
-                if (orderID.equalsIgnoreCase(order.getCustomerID())) {
+                if (orderID.equalsIgnoreCase(order.getOrderID())) {
                     return order;
                 }
             }
@@ -73,23 +72,23 @@ public class OrderManagement extends DataManagement<Orders> {
         }
         System.out.println("Not found.");
     }
-    
+
     public void printAllAsc() {
-//        Collections.sort(entityList, new Comparator<Orders>() {
-//            @Override
-//            public int compare(Orders o1, Orders o2) {
-////                String name1 = CustomersManagement.getInstance().getCustomerById(o1.getCustomerID()).getCustomerName();
-////                String name2 = CustomersManagement.getInstance().getCustomerById(o2.getCustomerID()).getCustomerName();
-////                return name1.compareTo(name2);
-//                return o1.getCustomerID().compareTo(o2.getCustomerID());
-//            }
-//        });
+        Collections.sort(entityList, new Comparator<Orders>() {
+            @Override
+            public int compare(Orders o1, Orders o2) {
+//                String name1 = CustomersManagement.getInstance().getCustomerById(o1.getCustomerID()).getCustomerName();
+//                String name2 = CustomersManagement.getInstance().getCustomerById(o2.getCustomerID()).getCustomerName();
+//                return name1.compareTo(name2);
+                return o1.getCustomer().getCustomerName().compareTo(o2.getCustomer().getCustomerName());
+            }
+        });
         printOutTable(entityList);
     }
 
     private void printOutTable(List<Orders> list) {
         Formatter fmt = new Formatter();
-        fmt.format("%9s %11s %11s %9s %13s %9s\n", 
+        fmt.format("%9s %11s %11s %9s %13s %9s\n",
                 "OrderID",
                 "CustomerID",
                 "ProductID",
@@ -97,13 +96,15 @@ public class OrderManagement extends DataManagement<Orders> {
                 "OrderDate",
                 "Status");
         for (Orders ord : list) {
-            fmt.format("%9s %11s %11s %9s %13s %9s\n",
-                    ord.getOrderID(),
-                    ord.getCustomerID(),
-                    ord.getProductID(),
-                    ord.getOrderQuantity(),
-                    OrderValidation.toString(ord.getOrderDate()),
-                    ord.getStatus());
+            for (OrderLine line : ord.getProductList()) {
+                fmt.format("%9s %11s %11s %9s %13s %9s\n",
+                        ord.getOrderID(),
+                        ord.getCustomer().getCustomerID(),
+                        line.getProductId(),
+                        line.getOrderQuantity(),
+                        OrderValidation.toString(ord.getOrderDate()),
+                        ord.getStatus());
+            }
         }
         System.out.println(fmt);
     }

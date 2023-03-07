@@ -2,11 +2,11 @@ package model;
 
 import Services.CustomersManagement;
 import Services.ProductManagement;
+import java.util.ArrayList;
 
 import java.util.Date;
-import java.util.Comparator;
+import java.util.List;
 
-import utils.CustomerValidation;
 import utils.OrderValidation;
 import utils.Util;
 
@@ -15,11 +15,12 @@ public class Orders {
     private static final String ID_Format = "DXXX";
     private static final String ID_Pattern = "D\\{3}";
     private static int ENTITY_ATTRIBUTE_COUNT = 6;
-
+    
+    private List<OrderLine> productList = new ArrayList();
     private String orderID;
-    private String customerID;
-    private String productID;
-    private int orderQuantity;
+    private Customers customer;
+//    private String productID;
+//    private int orderQuantity;
     private Date orderDate;
     private boolean status;
 
@@ -34,6 +35,16 @@ public class Orders {
         return sb.toString();
     }
 
+    public List<OrderLine> getProductList() {
+        return productList;
+    }
+
+    public void setProductList(List<OrderLine> productList) {
+        if (productList != null) {
+            this.productList.addAll(productList);
+        }
+    }
+
     public Orders() {
     }
 
@@ -41,13 +52,12 @@ public class Orders {
 
         do {
             String customerID = Util.inputString("Input customer's id (" + ID_Format + ")", false);
-            if (CustomersManagement.getInstance().getCustomerById(customerID) != null) {
-                if (CustomerValidation.checkCustomerID(customerID)) {
-                    setCustomerID(customerID);
+            Customers cus =CustomersManagement.getInstance().getCustomerById(customerID);
+            if (cus != null) {
+               
+                   setCustomer(cus);
                     break;
-                } else {
-                    System.out.println("Error");
-                }
+             
             } else {
                 System.out.println("Customer not found.");
             }
@@ -58,7 +68,9 @@ public class Orders {
             String productID = Util.inputString("Input product's id", false);
             if (ProductManagement.getInstance().getProductById(productID) != null) {
                 if (OrderValidation.checkProductID(productID)) {
-                    setProductID(productID);
+                    int quantity = Util.inputInteger("Input Product's Quantity", 0, Integer.MAX_VALUE);
+                    productList.add(new OrderLine(productID, quantity));
+//                    setProductID(productID);
                     break;
                 } else {
                     System.out.println("Error");
@@ -69,15 +81,15 @@ public class Orders {
         } while (true);
 
         // orderQuantity
-        do {
-            int quantity = Util.inputInt("Input order quantity");
-            if (OrderValidation.checkOrderQuantity(quantity)) {
-                setOrderQuantity(quantity);
-                break;
-            } else {
-                System.out.println("Error.");
-            }
-        } while (true);
+//        do {
+//            int quantity = Util.inputInt("Input order quantity");
+//            if (OrderValidation.checkOrderQuantity(quantity)) {
+//                setOrderQuantity(quantity);
+//                break;
+//            } else {
+//                System.out.println("Error.");
+//            }
+//        } while (true);
 
         // orderDate
         do {
@@ -122,17 +134,16 @@ public class Orders {
             }
         } while (true);
 
-        // customerID
+        // customer
         do {
-            System.out.println("\nOld customer ID: " + this.customerID);
+            System.out.println("\nOld customer ID: " + this.customer);
             String cID = Util.inputString("Enter the new customer ID", true);
-            if (!cID.isEmpty()) {
-                if (OrderValidation.checkCustomerID(cID)) {
-                    setCustomerID(cID);
+            Customers cus = CustomersManagement.getInstance().getCustomerById(cID);
+            if (cus != null) {
+               
+                    setCustomer(cus);
                     break;
-                } else {
-                    System.out.println("Error");
-                }
+           
             } else {
                 break;
             }
@@ -148,29 +159,29 @@ public class Orders {
         this.orderID = orderID;
     }
 
-    public String getCustomerID() {
-        return customerID;
+    public Customers getCustomer() {
+        return customer;
     }
 
-    public void setCustomerID(String customerID) {
-        this.customerID = customerID;
+    public void setCustomer(Customers customer) {
+        this.customer = customer;
     }
 
-    public String getProductID() {
-        return productID;
-    }
-
-    public void setProductID(String productID) {
-        this.productID = productID;
-    }
-
-    public int getOrderQuantity() {
-        return orderQuantity;
-    }
-
-    public void setOrderQuantity(int orderQuantity) {
-        this.orderQuantity = orderQuantity;
-    }
+//    public String getProductID() {
+//        return productID;
+//    }
+//
+//    public void setProductID(String productID) {
+//        this.productID = productID;
+//    }
+//
+//    public int getOrderQuantity() {
+//        return orderQuantity;
+//    }
+//
+//    public void setOrderQuantity(int orderQuantity) {
+//        this.orderQuantity = orderQuantity;
+//    }
 
     public Date getOrderDate() {
         return orderDate;
@@ -191,13 +202,16 @@ public class Orders {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append(orderID);
-        sb.append(Util.SEP).append(customerID);
-        sb.append(Util.SEP).append(productID);
-        sb.append(Util.SEP).append(orderQuantity);
-        sb.append(Util.SEP).append(orderDate);
-        sb.append(Util.SEP).append(status);
-        return sb.toString();
+        for (OrderLine orderLine : productList) {
+            sb.append("\n");
+            sb.append(orderID);
+            sb.append(Util.SEP).append(customer);
+            sb.append(Util.SEP).append(orderLine.getProductId());
+            sb.append(Util.SEP).append(orderLine.getOrderQuantity());
+            sb.append(Util.SEP).append(orderDate);
+            sb.append(Util.SEP).append(status);
+        }
+        return sb.toString().substring(1);
     }
 
     public void parseOrders(String entityString) throws Exception {
@@ -206,9 +220,9 @@ public class Orders {
             String[] attributes = entityString.split(Util.SEP, -1);
             if (attributes.length >= Orders.ENTITY_ATTRIBUTE_COUNT) {
                 setOrderID(attributes[0]);
-                setCustomerID(attributes[1]);
-                setProductID(attributes[2]);
-                setOrderQuantity(Integer.parseInt(attributes[3]));
+                setCustomer(CustomersManagement.getInstance().getCustomerById(attributes[1]));
+                // setProductID(attributes[2]);
+                productList.add(new OrderLine(attributes[2], Integer.parseInt(attributes[3])));
                 setOrderDate(OrderValidation.toDate(attributes[4]));
                 setStatus(Boolean.parseBoolean(attributes[5]));
             }

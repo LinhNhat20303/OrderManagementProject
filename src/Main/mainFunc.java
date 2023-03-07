@@ -3,13 +3,13 @@ package Main;
 import Main.Main.object;
 import Services.UserManagerment;
 
-public class MainFunc {
+public class mainFunc {
 
-    private boolean checkRole() {
+    private synchronized static boolean checkRole() {
         return UserManagerment.getInstance().getCurrentUser().checkRole(UserRole.ADMIN);
     }
 
-    public void add(object obj) {
+    public synchronized static void add(object obj) {
         if (checkRole()) {
             if (obj == object.CUSTOMER) {
                 System.out.println("Add new Customer");
@@ -25,12 +25,12 @@ public class MainFunc {
 
     }
 
-    public void deleteOrder() {
+    public synchronized static void deleteOrder() {
         System.out.println("Delete Order");
         Main.orderManagement.deleteOrder();
     }
 
-    public void print(object obj) {
+    public synchronized static void print(object obj) {
         if (checkRole()) {
             if (obj == object.CUSTOMER) {
                 System.out.println("Print ");
@@ -46,7 +46,7 @@ public class MainFunc {
         }
     }
 
-    public void update(object obj) {
+    public synchronized static void update(object obj) {
         if (checkRole()) {
             if (obj == object.CUSTOMER) {
                 System.out.println("Update customer information");
@@ -62,7 +62,7 @@ public class MainFunc {
 
     }
 
-    public void searchCustomerByID() {
+    public synchronized static void searchCustomerByID() {
         if (checkRole()) {
             System.out.println("Search information");
             Main.customerManagement.search();
@@ -71,7 +71,7 @@ public class MainFunc {
         }
     }
 
-    public void SaveToFile(object obj) {
+    public synchronized static void SaveToFile(object obj) {
         if (checkRole()) {
             if (obj == object.CUSTOMER) {
                 System.out.println("Save Data");
@@ -86,14 +86,14 @@ public class MainFunc {
         }
     }
 
-    public void printAllOrderAsc() {
+    public synchronized static void printAllOrderAsc() {
         System.out.println("Print all orders(ascending)");
         Main.orderManagement.printAllAsc();
         ;
 
     }
 
-    public void listAllPendingOrder() {
+    public synchronized static void listAllPendingOrder() {
         System.out.println("List all pending orders: ");
         Main.orderManagement.listAllPendingOrder();
     }

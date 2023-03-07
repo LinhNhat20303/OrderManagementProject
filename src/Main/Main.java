@@ -51,7 +51,7 @@ public class Main {
     }
 
     private void process() {
-        MainFunc mainFunc = new MainFunc();
+        mainFunc mainFunc = new mainFunc();
         Menu menu = new Menu();
         MenuItem userChoice;
         do {
